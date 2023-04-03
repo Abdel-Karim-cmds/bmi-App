@@ -1,3 +1,9 @@
 # Dependency directory for node
 
 node_modules/
+
+#Tests
+
+bmi.js
+
+bmi.test.js

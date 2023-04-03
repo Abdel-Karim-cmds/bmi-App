@@ -17,6 +17,10 @@ app.set('views', 'views')
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
+function BMI(weight,height){
+    return parseInt(weight) / (parseFloat(height) ** 2).toFixed(2)
+}
+
 app.get('/', (request, response) => {
     response.render('home', { name: "John Doe" })
 })
@@ -34,20 +38,14 @@ app.get('/get-bmi', (request, response) => {
 })
 
 app.post('/process', (request, response) => {
-    log(request.body)
     const { weight, height } = request.body
-    log(weight)
-    log(height)
-    const bmi = parseInt(weight) / (parseFloat(height) ** 2)
-    log(bmi)
+    // const bmi = parseInt(weight) / (parseFloat(height) ** 2)
     const info = {
-        bmi: bmi
+        bmi: BMI(parseInt(weight),parseFloat(height))
     }
-
     data.push(info)
     fs.writeFileSync(fileName, JSON.stringify(data, null, 2));
     response.redirect('/individual')
-
 })
 
 app.listen(port, () => console.log(`Sever is listening on port ${port}`))
